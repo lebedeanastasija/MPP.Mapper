@@ -12,6 +12,8 @@ namespace ClassMapper
     {
         private static readonly Mapper instance = new Mapper();
 
+        private TypeComparator typeComparator = new TypeComparator();
+
         public static Mapper Instance
         {
             get
@@ -49,11 +51,15 @@ namespace ClassMapper
                 {
                     foreach (PropertyInfo sourceProperty in sourceType.GetProperties())
                     {
-                        Expression sourcePropertyExpression = Expression.Property(sourceParameter, sourceProperty);
-                        Expression destinationPropertyExpression = Expression.Property(destinationParameter, destinationProperty);
+                        if(typeComparator.IsSuitableTypes(sourceProperty.PropertyType, destinationProperty.PropertyType) &&
+                           sourceProperty.Name == destinationProperty.Name)
+                        { 
+                            Expression sourcePropertyExpression = Expression.Property(sourceParameter, sourceProperty);
+                            Expression destinationPropertyExpression = Expression.Property(destinationParameter, destinationProperty);
 
-                        assignPropertiesExpression = Expression.Assign(destinationPropertyExpression, Expression.Convert(sourcePropertyExpression, destinationProperty.PropertyType));
-                        expressionList.Add(assignPropertiesExpression);
+                            assignPropertiesExpression = Expression.Assign(destinationPropertyExpression, Expression.Convert(sourcePropertyExpression, destinationProperty.PropertyType));
+                            expressionList.Add(assignPropertiesExpression);
+                        }
                     }
                 }
             }

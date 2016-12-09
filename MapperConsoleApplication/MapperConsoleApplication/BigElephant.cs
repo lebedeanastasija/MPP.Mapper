@@ -8,6 +8,9 @@ namespace MapperConsoleApplication
 {
     class BigElephant
     {
-        public int Weight { get; set; }
+        public double Weight { get; set; }
+        public long Age { get; set; }
+        public string Name { get; set; }
+        public string PassportId { get; set; }
     }
 }

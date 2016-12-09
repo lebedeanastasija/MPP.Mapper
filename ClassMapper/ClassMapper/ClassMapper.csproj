@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceDestPair.cs" />
+    <Compile Include="TypeComparator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

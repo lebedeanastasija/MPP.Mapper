@@ -8,6 +8,8 @@ namespace MapperConsoleApplication
 {
     class SmallElephant
     {
-        public int Weight { get; set; }
+        public float Weight { get; set; }
+        public int Age { get; set; }
+        public string Name { get; set; }
     }
 }

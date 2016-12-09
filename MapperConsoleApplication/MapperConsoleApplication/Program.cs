@@ -15,12 +15,18 @@ namespace MapperConsoleApplication
 
             SmallElephant elephant1 = new SmallElephant()
             {
-                Weight = 10
+                Weight = 10,
+                Age = 7,
+                Name = "Small Elephant Name"
             };
 
             BigElephant elephant2 = mapper.Map<SmallElephant, BigElephant>(elephant1);
 
             Console.WriteLine(elephant2.Weight.ToString());
+            Console.WriteLine(elephant2.Age.ToString());
+            Console.WriteLine(elephant2.Name);
+            Console.WriteLine(elephant2.PassportId);
+
             Console.Read();
         }
     }
