@@ -14,6 +14,8 @@ namespace ClassMapper
 
         private TypeComparator typeComparator = new TypeComparator();
 
+        private Dictionary<MappingResultPair, Delegate> mappingHash = new Dictionary<MappingResultPair, Delegate>();
+
         public static Mapper Instance
         {
             get
@@ -28,10 +30,27 @@ namespace ClassMapper
             Type sourseType = typeof(TSource);
             Type destType = typeof(TDestination);
 
+            MappingResultPair tempPair = new MappingResultPair()
+            {
+                TSource = sourseType,
+                TDestionation = destType
+            };
+
             TDestination result = (TDestination)destType.GetConstructor(new Type[0]).Invoke(new Object[0]);
-            Expression<Action<TSource, TDestination>> expression = BuildLambda<TSource, TDestination>();
-            var lambda = expression.Compile();
-            lambda(source, result);
+
+            if(mappingHash.ContainsKey(tempPair))
+            {
+                var lambda = mappingHash[tempPair];
+                ((Action<TSource, TDestination>)lambda)(source, result);
+            }
+            else
+            {
+                Expression<Action<TSource, TDestination>> expression = BuildLambda<TSource, TDestination>();
+                var lambda = expression.Compile();
+                mappingHash[tempPair] = lambda;
+                lambda(source, result);
+            }
+            
             return result;            
         }
 
